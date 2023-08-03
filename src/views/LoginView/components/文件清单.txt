@@ -1,0 +1,3 @@
+forgotPasswordView.vue  忘记密码
+loginView.vue           登录
+registerView.vue        注册
