@@ -83,3 +83,30 @@ export const projectCreatorInformation = async (params: {
 export const routingConfigurationInformation = async () =>
   (await http.get<TroutingConfigurationInformation>("/api/v1/menus/user_menus"))
     .data.data;
+
+// 部门
+export const departmentInformation = async (params: {
+  keyword: string;
+  department_id?: number;
+  date_after_created?: string;
+  state?: number;
+}) => (await http.get<TuserData>("/api/v1/users/list", { params })).data;
+
+// 部门名称
+export const departmentName = async () =>
+  (await http.get<TuserData>("api/v1/departments/list")).data;
+
+// 成员详情
+export const memberDetails = async (params: { id: number }) =>
+  (await http.get<TuserData>("/api/v1/users?", { params })).data;
+
+// 启用禁止
+export const EnableProhibit = async (data: { id: number; state: 0 | 1 }) =>
+  await http.put("/api/v1/users", data);
+
+// 编辑部门
+export const EditingDepartment = async (data: {
+  name: string;
+  sort: number;
+  id: number;
+}) => await http.put<TuserData>("/api/v1/departments", data);

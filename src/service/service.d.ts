@@ -687,3 +687,410 @@ type TroutingConfigurationInformationData = [
     };
   },
 ];
+
+// 获取用户信息
+type TuserData = IBaseResponse<TabulationResponse, NameResponse, EditResponse>;
+
+type TabulationResponse = {
+  count: number;
+  rows: [
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: undefined[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+    {
+      id: number;
+      user_id_github: number;
+      username: string;
+      department_id: object;
+      nickname: string;
+      email: string;
+      state: number;
+      phone: string;
+      avatar: string;
+      company: string;
+      city: string;
+      last_login: string;
+      created_at: string;
+      updated_at: string;
+      projects: {
+        id: number;
+        user_projects: {
+          id: number;
+          user_id: number;
+          project_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      roles: {
+        id: number;
+        name: string;
+        user_roles: {
+          id: number;
+          user_id: number;
+          role_id: number;
+          created_at: string;
+          updated_at: string;
+        };
+      }[];
+      department: { name: string };
+    },
+  ];
+};
+
+type NameResponse = {
+  code: number;
+  data: {
+    count: number;
+    rows: {
+      id: number;
+      name: string;
+      owner_id: number;
+      parent_id: number;
+      sort: number;
+      created_at: string;
+      updated_at: string;
+    }[];
+  };
+  msg: string;
+};
+// 编辑部门
+type EditResponse = {
+  id: number;
+  name: string;
+  owner_id: number;
+  parent_id: number;
+  sort: number;
+  created_at: string;
+  updated_at: string;
+};
