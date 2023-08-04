@@ -3,6 +3,18 @@ interface IBaseResponse<T = null> {
   data: T;
   msg: string;
 }
+type ResponseData = {
+  data: {
+    username: string;
+    email: string;
+    avatar: {
+      img: string;
+      url: string;
+    };
+    value: string;
+    _rawValue: string;
+  };
+};
 
 type TLoginResponse = IBaseResponse<{
   accessToken: string;

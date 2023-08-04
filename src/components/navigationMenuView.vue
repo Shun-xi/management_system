@@ -141,6 +141,7 @@
         <template #content>
           <div
             class="flex items-center w-[100px] h-[36px] px-[10px] cursor-pointer hover:bg-[#e6f7ff]"
+            @click="router.push('/personalCenter/personalCenter')"
           >
             <Icon icon="icon-park-outline:user" class="text-[14px] mr-[5px]" />
             个人设置

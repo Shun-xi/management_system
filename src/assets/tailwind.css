@@ -3,3 +3,9 @@
 @tailwind components;
 
 @tailwind utilities;
+.anticon svg {
+    vertical-align: baseline;
+  }
+  .ant-btn-primary {
+    background-color: #1677ff;
+  }

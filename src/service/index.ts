@@ -46,6 +46,11 @@ export const isUsersLogin = async (data: {
 // 用户信息
 export const userInformation = async () =>
   (await http.get<TUserInformation>("/api/v1/users/user_info")).data;
+export const User = async () =>
+  (await http.get<TUserInformation>("/api/v1/users/user_info")).data;
+//个人设置
+export const Users = async () =>
+  (await http.get<ResponseData>("/api/v1/users/user_info")).data.data;
 
 // 进行中项目
 export const ongoingProject = async (params: {
