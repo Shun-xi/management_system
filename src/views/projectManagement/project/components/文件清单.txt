@@ -1,3 +1,6 @@
 navigationListLeftView.vue 导航列表左
 projectFilteringView.vue  筛选
-inviteNewMembersView.vue  要求新成员
+inviteNewMembersView.vue  添加新成员
+menuView  菜单
+taskDisplayView 任务概览
+overviewView 概览

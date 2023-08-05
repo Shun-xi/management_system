@@ -205,7 +205,11 @@ import store from "storejs";
 const router = useRouter();
 
 // 请求 用户信息
-const { data: dataInformation } = useRequest(() => userInformation());
+const { data: dataInformation } = useRequest(() => userInformation(), {
+  onSuccess: () => {
+    store.set("username", dataInformation.value?.data.username);
+  },
+});
 
 // 跳转
 const selectedKeys = ref<string[]>(["1"]);

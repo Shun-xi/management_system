@@ -174,7 +174,9 @@
                     class="text-[#1b9aee] flex-1 cursor-pointer"
                     @click="
                       () => {
-                        router.push(`/projectManagement/project/${item.id}`);
+                        router.push(
+                          `/projectManagement/project/${item.project_id}`,
+                        );
                       }
                     "
                   >
@@ -184,7 +186,9 @@
                     class="text-[#8c8c8c] hover:text-[#1b9aee] text-[14px] cursor-pointer"
                     @click="
                       () => {
-                        router.push(`/projectManagement/project/${item.id}`);
+                        router.push(
+                          `/projectManagement/project/${item.project_id}`,
+                        );
                       }
                     "
                   >
@@ -234,7 +238,9 @@
                     class="text-[#1b9aee] flex-1 cursor-pointer"
                     @click="
                       () => {
-                        router.push(`/projectManagement/project/${item.id}`);
+                        router.push(
+                          `/projectManagement/project/${item.project_id}`,
+                        );
                       }
                     "
                   >
@@ -244,7 +250,9 @@
                     class="text-[#8c8c8c] hover:text-[#1b9aee] text-[14px] cursor-pointer"
                     @click="
                       () => {
-                        router.push(`/projectManagement/project/${item.id}`);
+                        router.push(
+                          `/projectManagement/project/${item.project_id}`,
+                        );
                       }
                     "
                   >
@@ -294,7 +302,9 @@
                     class="text-[#1b9aee] flex-1 cursor-pointer"
                     @click="
                       () => {
-                        router.push(`/projectManagement/project/${item.id}`);
+                        router.push(
+                          `/projectManagement/project/${item.project_id}`,
+                        );
                       }
                     "
                   >
@@ -304,7 +314,9 @@
                     class="text-[#8c8c8c] hover:text-[#1b9aee] text-[14px] cursor-pointer"
                     @click="
                       () => {
-                        router.push(`/projectManagement/project/${item.id}`);
+                        router.push(
+                          `/projectManagement/project/${item.project_id}`,
+                        );
                       }
                     "
                   >

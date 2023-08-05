@@ -1,7 +1,7 @@
 <template>
   <a-dropdown
+    v-model:open="dropdownMenuDisplayHidden"
     :trigger="['click']"
-    :destroyPopupOnHide="true"
     placement="bottom"
     arrow
   >
@@ -9,11 +9,13 @@
       <Icon class="mr-[5px]" icon="simple-line-icons:magnifier" />筛选
     </div>
     <template #overlay>
-      <a-menu class="w-[300px]">
+      <div
+        class="w-[310px] bg-[#ffffff] py-[10px] px-[5px] rounded-[10px] backgroundShadow"
+      >
         <!-- 标题 开始 -->
-        <a-space class="flex items-center my-[20px] pr-[10px]">
+        <div class="flex items-center my-[20px] pr-[10px]">
           <div
-            class="w-[80px] text-[14px] text-[#606266] leading-[40px] text-right"
+            class="w-[70px] pr-[10px] text-[14px] text-[#606266] leading-[40px] text-right"
           >
             标题
           </div>
@@ -22,18 +24,17 @@
             size="large"
             placeholder="搜索任务标题"
             class="h-[40px] flex-1"
-            style="width: 200px"
           />
-        </a-space>
+        </div>
         <!-- 标题 开始 -->
 
-        <a-space
-          class="mb-[20px] pr-[10px]"
+        <div
+          class="mb-[20px] pr-[10px] flex items-center"
           v-for="item in selectorParameters"
           :key="item.id"
         >
           <div
-            class="w-[80px] text-[14px] text-[#606266] leading-[40px] text-right"
+            class="w-[70px] pr-[10px] text-[14px] text-[#606266] leading-[40px] text-right"
           >
             {{ item.promptTitle }}
           </div>
@@ -43,14 +44,14 @@
             size="large"
             :placeholder="item.placeholder"
             :options="item.options"
-            style="width: 200px"
+            style="width: 220px"
             :showArrow="true"
             @change="onChange"
           ></a-select>
-        </a-space>
+        </div>
 
         <!-- 搜索 重置 开始 -->
-        <a-space class="flex items-center justify-center mb-[20px]">
+        <div class="flex items-center justify-center mb-[20px]">
           <a-button
             size="large"
             type="primary"
@@ -59,9 +60,9 @@
             >搜索</a-button
           >
           <a-button size="large" style="margin-left: 10px">重置</a-button>
-        </a-space>
+        </div>
         <!-- 搜索 重置 结束 -->
-      </a-menu>
+      </div>
     </template>
   </a-dropdown>
 </template>
@@ -71,6 +72,7 @@ import { projectCreatorInformation } from "@/service/index";
 
 // 路由解析
 const route = useRoute();
+const dropdownMenuDisplayHidden = ref<boolean>(false); // 下拉菜单显示隐藏
 
 // 标题
 const title = ref("");
@@ -187,7 +189,9 @@ function getTheUser<T extends string | string[]>(id: T) {
 watch(
   [route],
   () => {
-    getTheUser(route.params.id);
+    if (route.path.includes("/projectManagement/project")) {
+      getTheUser(route.params.id);
+    }
   },
   { immediate: true },
 );

@@ -3,8 +3,6 @@
   <router-view />
 </template>
 
-<script lang="ts" setup>
-// const route = useRoute();
-</script>
+<script lang="ts" setup></script>
 
 <style lang="stylus" scoped></style>
