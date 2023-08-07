@@ -148,6 +148,7 @@ const isProjectTemplate = ref(() => {
   router.push(`/projectManagement/ProjectTemplate`);
 });
 </script>
+<script lang="ts" setup></script>
 
 <style>
 .ant-btn-default {
