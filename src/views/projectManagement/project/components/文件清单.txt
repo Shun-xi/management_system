@@ -4,3 +4,4 @@ inviteNewMembersView.vue  添加新成员
 menuView  菜单
 taskDisplayView 任务概览
 overviewView 概览
+fileView 文件

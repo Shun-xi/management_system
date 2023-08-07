@@ -174,9 +174,12 @@
                     class="text-[#1b9aee] flex-1 cursor-pointer"
                     @click="
                       () => {
-                        router.push(
-                          `/projectManagement/project/${item.project_id}`,
-                        );
+                        router.push({
+                          path: `/projectManagement/project/${item.project_id}`,
+                          query: {
+                            taskId: item.id,
+                          },
+                        });
                       }
                     "
                   >

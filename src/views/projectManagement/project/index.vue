@@ -24,8 +24,9 @@
       <!-- 中 导航列表 结束 -->
 
       <!-- 右 功能列表 开始 -->
-      <div class="flex items-center">
+      <div class="flex items-center w-[288px] justify-end">
         <div
+          v-if="selectedKeys[0] === '1'"
           class="cursor-pointer text-[14px] text-[#c0c4cc] flex items-center"
         >
           <Icon
@@ -34,11 +35,21 @@
             :rotate="3"
           />看板视图
         </div>
-        <span class="text-[#c0c4cc] text-[14px] px-[10px]">|</span>
+        <span
+          class="text-[#c0c4cc] text-[14px] px-[10px]"
+          v-if="selectedKeys[0] === '1'"
+          >|</span
+        >
         <!-- 筛选开始 -->
-        <projectFilteringView></projectFilteringView>
+        <projectFilteringView
+          v-if="selectedKeys[0] === '1'"
+        ></projectFilteringView>
         <!-- 筛选结束 -->
-        <span class="text-[#c0c4cc] text-[14px] px-[10px]">|</span>
+        <span
+          class="text-[#c0c4cc] text-[14px] px-[10px]"
+          v-if="selectedKeys[0] === '1'"
+          >|</span
+        >
         <!-- 邀请新成员 开始 -->
         <inviteNewMembersView></inviteNewMembersView>
         <!-- 邀请新成员 结束 -->
@@ -57,6 +68,10 @@
       <taskDisplayView v-if="selectedKeys[0] === '1'"></taskDisplayView>
       <!-- 任务展示 结束 -->
 
+      <!-- 文件开始 开始 -->
+      <fileView v-if="selectedKeys[0] === '2'"></fileView>
+      <!-- 文件开始 结束 -->
+
       <!-- 概览 开始 -->
       <overviewView v-if="selectedKeys[0] === '3'"></overviewView>
       <!-- 概览 结束 -->
@@ -72,10 +87,10 @@ import inviteNewMembersView from "./components/inviteNewMembersView.vue";
 import menuView from "./components/menuView.vue";
 import taskDisplayView from "./components/taskDisplayView.vue";
 import overviewView from "./components/overviewView.vue";
+import fileView from "./components/fileView.vue";
 
 // 导航列表 默认下标
 const selectedKeys = ref<string[]>(["1"]);
-console.log(selectedKeys.value[0]);
 </script>
 
 <style lang="scss" scoped>

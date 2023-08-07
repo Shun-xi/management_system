@@ -103,9 +103,11 @@
                     state: key.is_done !== 1,
                   }"
                 ></div>
-                <a-checkbox
+                <input
+                  type="checkbox"
                   class="mx-[8px] w-[18px] h-[18px]"
                   :checked="key.is_done === 1 ? true : false"
+                  @click="completionStatus()"
                 />
                 <div class="flex-1">
                   <div
@@ -248,26 +250,58 @@
           >
             <!-- 任务 -->
             <div>
-              <a-dropdown :trigger="['click']" placement="bottomLeft" arrow>
+              <a-dropdown
+                :trigger="['click']"
+                placement="bottomLeft"
+                arrow
+                v-model:open="taskDropdownList"
+              >
                 <div
-                  class="flex items-center text-[14px] w-[90px] cursor-pointer"
+                  class="flex items-center text-[14px] w-[110px] cursor-pointer bg-[#fff]"
                   @click.prevent
                 >
-                  <Icon
-                    class="text-[18px] mr-[6px]"
-                    icon="material-symbols:task"
-                    color="#2799ef"
-                  />
-                  任务
+                  <div
+                    v-if="newTaskStatus === '2'"
+                    class="flex items-center w-full flex-1"
+                  >
+                    <Icon
+                      icon="mdi:file"
+                      color="#1b9aee"
+                      class="text-xl mr-[6px]"
+                    />
+                    任务
+                  </div>
+                  <div
+                    v-if="newTaskStatus === '3'"
+                    class="flex items-center w-full flex-1"
+                  >
+                    <Icon
+                      icon="icon-park-solid:label"
+                      color="#6a71b8"
+                      class="text-xl mr-[6px]"
+                    />
+                    需求
+                  </div>
+                  <div
+                    v-if="newTaskStatus === '4'"
+                    class="flex items-center w-full flex-1"
+                  >
+                    <Icon
+                      icon="material-symbols:charger-outline"
+                      color="#e62412"
+                      class="text-xl mr-[6px]"
+                    />
+                    缺陷
+                  </div>
                   <Icon
                     icon="ep:arrow-up-bold"
                     :rotate="2"
-                    class="text-[#a1a2a5] ml-[10px]"
+                    class="text-[#a1a2a5]"
                   />
                 </div>
                 <template #overlay>
-                  <a-menu
-                    class="w-[200px]"
+                  <div
+                    class="w-[200px] bg-white"
                     style="
                       padding: 10px 0 !important;
                       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important;
@@ -275,61 +309,58 @@
                       margin-left: -10px !important;
                     "
                   >
-                    <a-menu-item
-                      key="0"
-                      class="flex items-center w-full"
+                    <div
+                      class="flex items-center w-full h-[37px] cursor-pointer hover:bg-[#ecf5ff] hover:text-[#66b7ff] relative"
                       style="padding: 0 20px !important"
+                      @click="selectTaskType('2')"
                     >
-                      <a
-                        class="ant-dropdown-link flex items-center text-[14px]"
-                        style="line-height: 36px"
-                        @click.prevent
-                      >
-                        <Icon
-                          icon="mdi:file"
-                          color="#1b9aee"
-                          class="text-xl mr-[6px]"
-                        />
-                        任务
-                      </a>
-                    </a-menu-item>
-                    <a-menu-item
-                      key="1"
-                      class="flex items-center w-full"
+                      <Icon
+                        icon="mdi:file"
+                        color="#1b9aee"
+                        class="text-xl mr-[6px]"
+                      />
+                      任务
+                      <Icon
+                        v-if="newTaskStatus === '2'"
+                        icon="icon-park-solid:correct"
+                        class="absolute top-[50%] right-[10px] translate-x-[-50%] translate-y-[-50%]"
+                      />
+                    </div>
+                    <div
+                      class="flex items-center w-full h-[37px] cursor-pointer hover:bg-[#ecf5ff] hover:text-[#66b7ff] relative"
                       style="padding: 0 20px !important"
+                      @click="selectTaskType('3')"
                     >
-                      <a
-                        class="ant-dropdown-link flex items-center text-[14px]"
-                        style="line-height: 36px"
-                        @click.prevent
-                      >
-                        <Icon
-                          icon="icon-park-solid:label"
-                          color="#6a71b8"
-                          class="text-xl mr-[6px]"
-                        />
-                        需求
-                      </a>
-                    </a-menu-item>
-                    <a-menu-item
-                      key="2"
-                      class="flex items-center w-full"
+                      <Icon
+                        icon="icon-park-solid:label"
+                        color="#6a71b8"
+                        class="text-xl mr-[6px]"
+                      />
+                      需求
+                      <Icon
+                        v-if="newTaskStatus === '3'"
+                        icon="icon-park-solid:correct"
+                        class="absolute top-[50%] right-[10px] translate-x-[-50%] translate-y-[-50%]"
+                      />
+                    </div>
+                    <div
+                      class="flex items-center w-full h-[37px] cursor-pointer hover:bg-[#ecf5ff] hover:text-[#66b7ff] relative"
                       style="padding: 0 20px !important"
+                      @click="selectTaskType('4')"
                     >
-                      <a
-                        class="ant-dropdown-link flex items-center text-[14px]"
-                        style="line-height: 36px"
-                        @click.prevent
-                      >
-                        <Icon
-                          icon="material-symbols:charger-outline"
-                          color="#e62412"
-                          class="text-xl mr-[6px]"
-                        />
-                        缺陷
-                      </a>
-                    </a-menu-item>
-                  </a-menu>
+                      <Icon
+                        icon="material-symbols:charger-outline"
+                        color="#e62412"
+                        class="text-xl mr-[6px]"
+                      />
+                      缺陷
+                      <Icon
+                        v-if="newTaskStatus === '4'"
+                        icon="icon-park-solid:correct"
+                        class="absolute top-[50%] right-[10px] translate-x-[-50%] translate-y-[-50%]"
+                      />
+                    </div>
+                  </div>
                 </template>
               </a-dropdown>
             </div>
@@ -350,21 +381,47 @@
             <!-- 待认领 -->
             <div class="py-[5px]">
               <a-dropdown
+                v-model:open="selectPerformer"
                 :trigger="['click']"
                 class="h-[40px] my-[6px]"
-                placement="topLeft"
+                placement="top"
                 arrow
               >
                 <div
-                  class="text-[14px] flex items-center cursor-pointer w-[106px]"
+                  class="text-[14px] flex items-center cursor-pointer w-[120px]"
                   @click.prevent
                 >
-                  <Icon
-                    icon="heroicons:photo"
-                    color="#606266"
-                    class="opacity-[0.5] mx-[16px]"
-                  />
-                  <span class="text-[#ccc]">待认领</span>
+                  <div class="flex-1">
+                    <div
+                      v-if="!unclaimed && performer.length === 0"
+                      class="flex items-center w-full cursor-pointer py-[5px] px-[3px] text-[14px] h-[42px] relative"
+                    >
+                      <img
+                        src="data:image/png;base64,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"
+                        alt=""
+                        class="w-[32px] h-[32px] rounded-[50%] mr-[10px]"
+                      />
+                      <span class="text-[#606266] flex-1 line-clamp-1"
+                        >待认领</span
+                      >
+                    </div>
+                    <!-- 项目成员 -->
+                    <div
+                      v-for="item in performer"
+                      :key="item.id"
+                      class="flex items-center w-full cursor-pointer py-[5px] px-[3px] text-[14px] h-[42px] relative"
+                      @click="selectPerformerFn(item)"
+                    >
+                      <img
+                        :src="item.avatar"
+                        alt=""
+                        class="w-[32px] h-[32px] rounded-[50%] mr-[10px]"
+                      />
+                      <span class="text-[#606266] flex-1 line-clamp-1">{{
+                        item.username
+                      }}</span>
+                    </div>
+                  </div>
                   <Icon
                     icon="mdi:question-mark-circle"
                     color="#606266"
@@ -373,8 +430,8 @@
                 </div>
                 <!-- 待认领弹窗 -->
                 <template #overlay>
-                  <a-menu
-                    class="w-[240px]"
+                  <div
+                    class="w-[240px] bg-white"
                     style="
                       padding: 12px !important;
                       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important;
@@ -387,6 +444,7 @@
                       <a-input
                         class="h-[36px] pl-[30px] rounded-[4px]"
                         placeholder="搜索"
+                        v-model:value="searchForMembers"
                       />
                       <Icon
                         icon="simple-line-icons:magnifier"
@@ -403,96 +461,131 @@
                       "
                     >
                       <!-- 执行者 -->
+                      <p style="line-height: 40px; color: rgba(0, 0, 0, 0.45)">
+                        执行者
+                      </p>
                       <div>
-                        <p
-                          style="line-height: 40px; color: rgba(0, 0, 0, 0.45)"
+                        <div
+                          v-if="!unclaimed && performer.length === 0"
+                          class="flex items-center w-full cursor-pointer py-[5px] px-[3px] text-[14px] h-[42px] relative hover:bg-[#f5f5f5]"
                         >
-                          执行者
-                        </p>
-                        <a-menu-item
-                          key="0"
-                          class="flex items-center w-full"
-                          style="padding: 0 20px !important"
-                        >
-                          <a
-                            class="ant-dropdown-link flex items-center text-[14px]"
-                            style="line-height: 36px"
-                            @click.prevent
+                          <img
+                            src="data:image/png;base64,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"
+                            alt=""
+                            class="w-[32px] h-[32px] rounded-[50%] mr-[10px]"
+                          />
+                          <span class="text-[#606266] flex-1 line-clamp-1"
+                            >待认领</span
                           >
-                            <Icon icon="heroicons:photo" color="#606266" />
-                            <span class="ml-[16px] text-[#606266]">待认领</span>
-                          </a>
-                        </a-menu-item>
+                          <Icon
+                            icon="icon-park-solid:correct"
+                            class="absolute top-[50%] right-[10px] translate-x-[-50%] translate-y-[-50%]"
+                          />
+                        </div>
+                        <!-- 项目成员 -->
+                        <div
+                          v-for="item in performer"
+                          :key="item.id"
+                          class="flex items-center w-full cursor-pointer py-[5px] px-[3px] text-[14px] h-[42px] relative hover:bg-[#f5f5f5]"
+                          @click="selectPerformerFn(item)"
+                        >
+                          <img
+                            :src="item.avatar"
+                            alt=""
+                            class="w-[32px] h-[32px] rounded-[50%] mr-[10px]"
+                          />
+                          <span class="text-[#606266] flex-1 line-clamp-1">{{
+                            item.username
+                          }}</span>
+                          <Icon
+                            icon="icon-park-solid:correct"
+                            class="absolute top-[50%] right-[10px] translate-x-[-50%] translate-y-[-50%]"
+                          />
+                        </div>
                       </div>
                       <!-- 其他成员 -->
-                      <div>
-                        <p
-                          style="line-height: 40px; color: rgba(0, 0, 0, 0.45)"
+                      <div
+                        style="line-height: 40px; color: rgba(0, 0, 0, 0.45)"
+                      >
+                        其他成员
+                      </div>
+                      <div
+                        class="max-h-[200px] scrollable-container overflow-auto"
+                      >
+                        <!-- 待领取 -->
+                        <div
+                          v-if="unclaimed || performer.length !== 0"
+                          @click="
+                            () => {
+                              unclaimed = false;
+                              selectPerformer = false;
+                              performer = [];
+                            }
+                          "
+                          class="flex items-center w-full cursor-pointer py-[5px] px-[3px] text-[14px] h-[42px] relative hover:bg-[#f5f5f5]"
                         >
-                          其他成员
-                        </p>
-                        <a-menu-item
-                          key="1"
-                          class="flex items-center w-full"
-                          style="padding: 0 10px !important"
+                          <img
+                            src="data:image/png;base64,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"
+                            alt=""
+                            class="w-[32px] h-[32px] rounded-[50%] mr-[10px]"
+                          />
+                          <span class="text-[#606266] flex-1 line-clamp-1"
+                            >待认领</span
+                          >
+                        </div>
+                        <!-- 项目成员 -->
+                        <div
+                          v-for="item in dataProjectCreatorInformation?.rows"
+                          :key="item.id"
+                          @click="selectPerformerFn(item)"
                         >
-                          <a
-                            class="ant-dropdown-link flex items-center text-[14px]"
-                            style="line-height: 36px"
-                            @click.prevent
+                          <!-- performer -->
+                          <div
+                            v-if="performer[0]?.id !== item.id"
+                            class="flex items-center w-full cursor-pointer py-[5px] px-[3px] text-[14px] h-[42px] relative hover:bg-[#f5f5f5]"
                           >
                             <img
-                              src="https://fastly.picsum.photos/id/796/100/100.jpg?hmac=4jf7kRR_7zoBOy6P2wJKqKvk8S2WMBs6BzZMKyNHA74"
+                              :src="item.avatar"
                               alt=""
-                              class="w-[32px] h-[32px] rounded-[50%]"
+                              class="w-[32px] h-[32px] rounded-[50%] mr-[10px]"
                             />
-                            <span class="ml-[6px] text-[#606266]"
-                              >活的数据</span
-                            >
-                          </a>
-                        </a-menu-item>
+                            <span class="text-[#606266] flex-1 line-clamp-1">{{
+                              item.username
+                            }}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div
-                      class="pt-[10px] mt-[5px]"
-                      style="border-top: 1px solid #e5e5e5"
-                    >
-                      <a-form-item class="mb-0">
-                        <a-button
-                          type="primary"
-                          class="w-full rounded-[4px] h-[40px] text-[#fff] bg-[#409eff] border-[##409eff]"
-                        >
-                          邀请新成员
-                        </a-button>
-                      </a-form-item>
-                    </div>
-                  </a-menu>
+                  </div>
                 </template>
               </a-dropdown>
             </div>
             <!-- 确认取消 -->
             <div>
-              <a-form-item class="mb-0">
-                <a-button
-                  type="primary"
-                  class="w-[49%] h-[40px] rounded-[4px] text-[#606266] bg-[#fff] border-[#DCDFE6] transition"
-                  @click="addTask[index] = false"
-                >
-                  取消
-                </a-button>
-                <a-button
-                  type="primary"
-                  class="w-[49%] h-[40px] rounded-[4px] ml-[10px] text-[#fff] bg-[#409EFF] border-[#409EFF]"
-                  @click="
-                    () => {
-                      addTask[index] = false;
-                      onCreateTask(item);
-                    }
-                  "
-                >
-                  确定
-                </a-button>
-              </a-form-item>
+              <a-button
+                type="primary"
+                class="w-[49%] h-[40px] rounded-[4px] text-[#606266] bg-[#fff] border-[#DCDFE6] transition"
+                @click="
+                  () => {
+                    addTask[index] = false;
+                    searchForMembers = '';
+                  }
+                "
+              >
+                取消
+              </a-button>
+              <a-button
+                type="primary"
+                class="w-[49%] h-[40px] rounded-[4px] ml-[10px] text-[#fff] bg-[#409EFF] border-[#409EFF]"
+                @click="
+                  () => {
+                    addTask[index] = false;
+                    onCreateTask(item);
+                  }
+                "
+              >
+                确定
+              </a-button>
             </div>
           </div>
           <!-- 添加按钮 结束 -->
@@ -587,6 +680,8 @@ import {
   moveAllTasksInThisColumnToTheRecycleBin,
   getDeleteList,
   getCreateTask,
+  projectCreatorInformation,
+  modificationCompletionStatus,
 } from "@/service/index";
 import { Modal, notification } from "ant-design-vue";
 import dayjs from "dayjs";
@@ -774,18 +869,63 @@ function deleteList(
 }
 
 // 创建任务
-const newTaskName = ref("");
+const newTaskName = ref(""); // 任务名称
+const newTaskStatus = ref("2"); // 任务类型
+const taskDropdownList = ref(false); // 选择任务类型下拉列表
+const selectPerformer = ref(false); // 选择执行者下拉列表
+const unclaimed = ref(false); // 待领取
+// eslint-disable-next-line no-undef
+const performer = ref<TprojectCreatorInformationRows[]>([]); // 选择的执行者
+const searchForMembers = ref(""); // 搜索成员
+
+// 函数 选择任务类型
+function selectTaskType(str: string) {
+  newTaskStatus.value = str;
+  taskDropdownList.value = false;
+}
+
+// 请求 获取项目参与者
+const {
+  data: dataProjectCreatorInformation,
+  run: runProjectCreatorInformation,
+} = useRequest((obj) => projectCreatorInformation(obj), { manual: true });
+
+// 监听 是否 搜索成员
+watch([searchForMembers], () => {
+  runProjectCreatorInformation({
+    keyword: searchForMembers.value,
+    project_id: route.params.id,
+  });
+});
+
+// 监听 是否 打开 选择执行者列表
+watch([selectPerformer], () => {
+  if (selectPerformer.value === true) {
+    runProjectCreatorInformation({
+      keyword: searchForMembers.value,
+      project_id: route.params.id,
+    });
+  }
+});
+
+// 函数 选择执行者
+// eslint-disable-next-line no-undef
+function selectPerformerFn(item: TprojectCreatorInformationRows) {
+  performer.value = [];
+  performer.value.push(item);
+  selectPerformer.value = false;
+}
 
 // 请求 创建任务
 const { run: runGetCreateTask } = useRequest(
-  ({ name, task_list_id, project_id }) =>
+  ({ name, task_list_id, project_id, task_type_id, executor_id }) =>
     getCreateTask({
       name,
       task_list_id,
-      task_type_id: 2,
+      task_type_id,
       task_state_id: 2,
       task_priority_id: 2,
-      executor_id: 0,
+      executor_id,
       project_id,
     }),
   {
@@ -801,12 +941,28 @@ const { run: runGetCreateTask } = useRequest(
 );
 
 // 创建任务
-function onCreateTask(item) {
+// eslint-disable-next-line no-undef
+function onCreateTask(item: TgetTaskListRowsData) {
   runGetCreateTask({
     name: newTaskName.value,
     task_list_id: item.id,
     project_id: item.project_id,
+    task_type_id: newTaskStatus.value,
+    executor_id: performer.value[0]?.id ?? 0,
   });
+}
+
+// 请求 更改完成状态
+const { run: runModificationCompletionStatus } = useRequest(
+  (obj) => modificationCompletionStatus(obj),
+  {
+    manual: true,
+  },
+);
+
+// 函数 更改完成状态
+function completionStatus() {
+  console.log();
 }
 </script>
 
