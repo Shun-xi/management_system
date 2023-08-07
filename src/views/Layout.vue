@@ -105,7 +105,10 @@ const route = useRoute();
 
 let isExist = ref(false);
 watchEffect(() => {
-  isExist.value = route.path.includes("projectManagement");
+  isExist.value =
+    route.path.includes("/projectManagement/ProjectLists") ||
+    route.path.includes("/projectManagement/ProjectTemplate") ||
+    route.path.includes("/projectManagement/message");
 });
 
 import router from "@/router";

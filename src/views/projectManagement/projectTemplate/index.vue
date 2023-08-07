@@ -113,16 +113,63 @@
               <!-- 产品计划 -->
               <div class="flex txt">
                 <div class="flex items-center">
-                  产品计划 <Icon icon="ph:arrow-right" />
+                  产品计划
+                  <svg
+                    class="w-[12px] h-[12px]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="256"
+                    height="256"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="m221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"
+                    />
+                  </svg>
                 </div>
                 <div class="flex items-center">
-                  即将发布 <Icon icon="ph:arrow-right" />
+                  即将发布
+                  <svg
+                    class="w-[12px] h-[12px]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="256"
+                    height="256"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="m221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"
+                    />
+                  </svg>
                 </div>
                 <div class="flex items-center">
-                  测试 <Icon icon="ph:arrow-right" />
+                  测试
+                  <svg
+                    class="w-[12px] h-[12px]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="256"
+                    height="256"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="m221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"
+                    />
+                  </svg>
                 </div>
                 <div class="flex items-center">
-                  准备发布<Icon icon="ph:arrow-right" />
+                  准备发布<svg
+                    class="w-[12px] h-[12px]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="256"
+                    height="256"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="m221.66 133.66l-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z"
+                    />
+                  </svg>
                 </div>
                 <div class="flex items-center">发布成功</div>
               </div>
