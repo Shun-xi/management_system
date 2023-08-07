@@ -1,5 +1,5 @@
 <template>
-  <div class="contentHeight">
+  <div class="contentHeight" :key="$route.fullPath">
     <!-- 导航列表 开始 -->
     <div
       class="w-[100%] h-[46px] text-[15px] border-b border-[#d9d9d9] bg-[#fff] flex items-center justify-between"

@@ -226,6 +226,7 @@ const onMenuItemWorkbench = function () {
 
 const onMenuItemProject = function () {
   selectedKeys.value = ["2"];
+  router.push("/projectManagement/ProjectLists/ProjectList/1");
 };
 
 const onMenuItemDepartment = function () {
