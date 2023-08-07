@@ -89,7 +89,11 @@
         <div class="projectHeight scrollable-container">
           <!-- 任务 开始 -->
           <div v-if="tasksInTheTaskList[item.id]?.count !== 0">
-            <div v-for="key in tasksInTheTaskList[item.id]?.rows" :key="key.id">
+            <div
+              v-for="key in tasksInTheTaskList[item.id]?.rows"
+              :key="key.id"
+              @click="taskDetailsT++"
+            >
               <div
                 v-if="key.is_recycle !== 1"
                 class="moveIn w-[270px] min-h-[68px] p-[10px] text-[14px] text-[#303133] bg-white mb-[8px] cursor-pointer overflow-hidden rounded-[4px] flex items-center relative shadow"
@@ -669,9 +673,14 @@
     </a-modal>
     <!-- 编辑任务列表 结束 -->
   </div>
+
+  <!-- 任务详情 开始 -->
+  <taskDetailsView v-if="taskDetailsT % 2 === 0"></taskDetailsView>
+  <!-- 任务详情 结束 -->
 </template>
 
 <script lang="ts" setup>
+import taskDetailsView from "./taskDetailsView.vue";
 import {
   getTaskList,
   getAllTasksInTheCurrentTaskList,
@@ -689,6 +698,7 @@ import "dayjs/locale/zh-cn"; // 引入中文语言包
 import { createVNode } from "vue";
 dayjs.locale("zh-cn"); // 设置使用中文语言包
 
+const taskDetailsT = ref(1);
 const route = useRoute();
 const addTask = ref<boolean[]>([]); // 添加任务 显示隐藏
 const projectListSettings = ref<boolean[]>([]); // 项目列表下拉菜单显示隐藏

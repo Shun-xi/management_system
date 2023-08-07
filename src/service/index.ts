@@ -331,3 +331,17 @@ export const ImgProjectFiles = async (params: IdataUrl) =>
 export const modificationCompletionStatus = async (
   data: TmodificationCompletionStatus,
 ) => (await http.put<IBaseResponse>("/api/v1/tasks", data)).data;
+
+export const task = async (params: { id: number }) =>
+  (
+    await http.get<TaskData>("/api/v1/tasks", {
+      params,
+    })
+  ).data.data;
+//  任务数据相关用户
+export const task_name = async (params: { project_id: number }) =>
+  (
+    await http.get<ResponseData_ass>("/api/v1/users/list", {
+      params,
+    })
+  ).data.data;
