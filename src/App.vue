@@ -1,10 +1,15 @@
 <template>
-  <router-view />
+  <router-view :key="$route.fullPath" />
 </template>
 
 <script lang="ts" setup></script>
 
 <style lang="scss">
+/* 阴影 */
+.backgroundShadow {
+  box-shadow: 0px 0px 8px #ccc;
+}
+
 /* 容器高度、颜色 */
 .contentHeight {
   height: calc(100vh - 65px);
@@ -39,5 +44,9 @@
   &::-webkit-scrollbar-track:hover {
     background-color: transparent;
   }
+}
+
+.ant-notification {
+  z-index: 2000;
 }
 </style>

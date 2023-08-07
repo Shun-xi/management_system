@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
 import LoginView from "@/views/LoginView/LoginView.vue";
 import result404 from "@/views/result404.vue";
+import result401or403 from "@/views/result401or403.vue";
 
 const constantRoutes: Array<RouteRecordRaw> = [
   // 登录、注册
@@ -8,10 +9,12 @@ const constantRoutes: Array<RouteRecordRaw> = [
     path: "/LoginView",
     name: "LoginView",
     component: LoginView,
-    meta: {
-      navigationDisplayHide: false,
-      currentNavigationPage: "1",
-    },
+  },
+  // 404
+  {
+    path: "/401_3",
+    name: "401_3",
+    component: result401or403,
   },
   // 404
   {

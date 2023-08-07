@@ -2,7 +2,6 @@
   <a-dropdown
     v-model:open="dropdownMenuDisplayHidden"
     :trigger="['click']"
-    :destroyPopupOnHide="true"
     placement="bottom"
     arrow
     class="w-[275px] dropDownList pl-[20px]"
@@ -19,24 +18,28 @@
       />
     </div>
     <template #overlay>
-      <a-menu class="w-[275px]">
-        <a-input
-          v-model:value="projectSearchvalue"
-          placeholder="搜索"
-          class="h-[36px]"
-        >
-          <template #prefix>
-            <Icon
-              class="mr-[5px] text-[#cec6d6]"
-              icon="simple-line-icons:magnifier"
-            />
-          </template>
-        </a-input>
+      <div
+        class="w-[275px] bg-[#ffffff] py-[10px] rounded-[10px] backgroundShadow"
+      >
+        <div class="px-[10px]">
+          <a-input
+            v-model:value="projectSearchvalue"
+            placeholder="搜索"
+            class="h-[36px]"
+          >
+            <template #prefix>
+              <Icon
+                class="mr-[5px] text-[#cec6d6]"
+                icon="simple-line-icons:magnifier"
+              />
+            </template>
+          </a-input>
+        </div>
         <div
-          class="max-h-[500px] overflow-x-hidden overflow-y-auto mt-[10px] cursor-pointer scrollable-container"
+          class="max-h-[500px] overflow-x-hidden overflow-y-auto mt-[10px] cursor-pointer scrollable-container px-[10px]"
         >
           <div
-            v-for="item in dataOngoingProject"
+            v-for="item in dataAfterSearch"
             :key="item.id"
             class="flex items-center h-[60px] text-[#606266] hover:bg-[#ecf5ff] hover:text-[#66b1ff] relative"
             @click="
@@ -86,7 +89,7 @@
             />
           </div>
         </div>
-      </a-menu>
+      </div>
     </template>
   </a-dropdown>
 </template>
@@ -106,11 +109,12 @@ const router = useRouter();
 // 路由解析
 const route = useRoute();
 
-// 项目搜索
-const projectSearchvalue = ref<string>("");
 const currentProjectName = ref<string>(""); //  当前项目名称
 const currentlyDisplayedItemsID = ref<number>(); // 当前显示的项目
 const dropdownMenuDisplayHidden = ref<boolean>(false); // 下拉菜单显示隐藏
+const projectSearchvalue = ref<string>(""); // 项目搜索
+// eslint-disable-next-line no-undef
+let dataAfterSearch = ref<IOngoingProjectRow[] | undefined>([]);
 
 // 请求 获取进行中的项目
 const { data: dataOngoingProject, refresh } = useRequest(
@@ -127,9 +131,25 @@ const { data: dataOngoingProject, refresh } = useRequest(
           currentlyDisplayedItemsID.value = item.id;
         }
       });
+      dataInterception();
     },
   },
 );
+
+function dataInterception() {
+  if (projectSearchvalue.value !== "") {
+    dataAfterSearch.value = dataOngoingProject.value?.filter((item) => {
+      return item.name.includes(projectSearchvalue.value);
+    });
+  } else {
+    dataAfterSearch.value = dataOngoingProject.value;
+  }
+}
+
+// 监听 搜索
+watch([projectSearchvalue], () => {
+  dataInterception();
+});
 </script>
 
 <style lang="stylus" scoped></style>

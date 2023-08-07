@@ -26,4 +26,5 @@ export default (data: TroutingConfigurationInformationData) => {
   tree.forEach((route) => {
     router.addRoute(route as RouteRecordRaw);
   });
+  // console.log(router.getRoutes());
 };
