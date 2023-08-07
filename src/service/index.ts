@@ -89,6 +89,36 @@ export const routingConfigurationInformation = async () =>
   (await http.get<TroutingConfigurationInformation>("/api/v1/menus/user_menus"))
     .data.data;
 
+// 部门
+export const departmentInformation = async (params: {
+  keyword: string;
+  department_id?: number;
+  date_after_created?: string;
+  state?: number;
+}) => (await http.get<TuserData>("/api/v1/users/list", { params })).data;
+
+// 部门名称
+export const departmentName = async () =>
+  (await http.get<TuserData>("api/v1/departments/list")).data;
+
+// 成员详情
+export const memberDetails = async (params: { id: number }) =>
+  (await http.get<TuserData>("/api/v1/users?", { params })).data;
+
+// 启用禁止
+export const EnableProhibit = async (data: { id: number; state: 0 | 1 }) =>
+  await http.put("/api/v1/users", data);
+
+// 编辑部门
+export const EditingDepartment = async (data: {
+  id: number;
+  name: string;
+  owner_id: number;
+  parent_id: number;
+  sort: number;
+  created_at: string;
+  updated_at: string;
+}) => await http.put<TuserData>("/api/v1/departments", data);
 // 更改用户状态 移出
 export const changeUserStatusRemove = async (data: {
   project_id: number;

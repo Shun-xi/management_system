@@ -230,6 +230,7 @@ const onMenuItemProject = function () {
 
 const onMenuItemDepartment = function () {
   selectedKeys.value = ["3"];
+  router.push("/departmentManagement/departmentManagement");
 };
 
 // 接收路由数据
