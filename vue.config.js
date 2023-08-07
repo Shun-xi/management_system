@@ -8,6 +8,9 @@ module.exports = defineConfig({
   runtimeCompiler: true,
   devServer: {
     open: true,
+    client: {
+      overlay: false,
+    },
   },
   configureWebpack: {
     plugins: [
