@@ -106,7 +106,11 @@ export const EnableProhibit = async (data: { id: number; state: 0 | 1 }) =>
 
 // 编辑部门
 export const EditingDepartment = async (data: {
-  name: string;
-  sort: number;
   id: number;
+  name: string;
+  owner_id: number;
+  parent_id: number;
+  sort: number;
+  created_at: string;
+  updated_at: string;
 }) => await http.put<TuserData>("/api/v1/departments", data);

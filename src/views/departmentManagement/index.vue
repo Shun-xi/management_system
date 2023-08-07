@@ -1,6 +1,5 @@
 <template>
   <div class="bg-[#F5F5F5] py-[20px] Height">
-    <!-- <a-alert message="Success Text" type="success" /> -->
     <a-layout class="w-[1100px] h-[100%] m-auto p-[20px] bg-[#fff]">
       <!-- 左侧列表 -->
       <a-layout-sider
@@ -13,8 +12,11 @@
         <!-- 搜索框开始 -->
         <div class="w-[226px] h-[34px]">
           <a-input
+            type="text"
             placeholder="输入'用户名/邮箱'回车搜索"
+            v-model:value="SearchUseInf"
             class="h-[34px] w-[226px] border-[1px] border-[#E8E8E8] rounded-[8px]"
+            @keyup.enter="searchUser"
           >
             <template #prefix>
               <Icon
@@ -37,9 +39,9 @@
             key="1"
             class="leftList1"
             @click="
-              userDataFunction({ keyword: '' });
+              userDataFunction({ keyword: SearchUseInf });
               toggleElementDeny();
-              info = '所有成员';
+              showDepartmentValue('所有成员');
             "
           >
             <Icon icon="formkit:people" class="text-[20px] mr-[8px]" />
@@ -49,11 +51,11 @@
             key="2"
             @click="
               userDataFunction({
-                keyword: '',
+                keyword: SearchUseInf,
                 date_after_created: '2023-07-02 00:00:00',
               });
               toggleElementDeny();
-              info = '新加入的成员';
+              showDepartmentValue('新加入的成员');
             "
           >
             <Icon
@@ -65,9 +67,9 @@
           <a-menu-item
             key="3"
             @click="
-              userDataFunction({ keyword: '', department_id: 0 });
+              userDataFunction({ keyword: SearchUseInf, department_id: 0 });
               toggleElementDeny();
-              info = '未分配部门的成员';
+              showDepartmentValue('未分配部门的成员');
             "
           >
             <Icon
@@ -79,9 +81,9 @@
           <a-menu-item
             key="4"
             @click="
-              userDataFunction({ keyword: '', state: 0 });
+              userDataFunction({ keyword: SearchUseInf, state: 0 });
               toggleElementDeny();
-              info = '停用的成员';
+              showDepartmentValue('停用的成员');
             "
           >
             <Icon
@@ -112,19 +114,21 @@
           class="bg-[#fff] text-[#000]"
         >
           <a-menu-item
-            v-for="item in dataInformation?.data.rows"
+            v-for="(item, index) in DepartmentSorting"
             :key="item.id"
             @click="
               userDataFunction({
-                keyword: '',
+                keyword: SearchUseInf,
                 department_id: item.id,
               });
               toggleElement();
-              info = item.name;
-              sort = item.sort;
+              showDepartmentValue(item.name, item, index);
             "
           >
-            <Icon icon="ph:git-branch" class="text-[20px] mr-[8px]" />
+            <Icon
+              icon="mingcute:department-fill"
+              class="text-[20px] mr-[8px]"
+            />
             <span class="nav-text">{{ item.name }}</span>
           </a-menu-item>
         </a-menu>
@@ -138,7 +142,7 @@
           class="flex items-start justify-between"
         >
           <div class="leading-[20px] text-[18px]">
-            <span>{{ info }}.</span
+            <span>{{ selectedValue }}.</span
             ><span class="px-[5px]">{{ UserData?.data.rows.length }}</span>
           </div>
           <div v-show="showElement" class="flex items-center">
@@ -153,7 +157,7 @@
               <span class="ml-[5px]">添加新成员</span>
             </div>
             <div
-              class="flex items-center leading-[30px] ml-[15px] text-[#C0C4CC] cursor-pointer hover:text-[#409EFF]"
+              class="flex items-center leading-[30px] ml-[15px] cursor-pointer text-[#409EFF]"
             >
               <Icon icon="circum:edit" class="text-[16px]" />
               <span class="ml-[5px]" @click="department(true)">编辑部门</span>
@@ -183,14 +187,16 @@
                 />
               </div>
               <div class="ml-[15px] flex flex-col">
-                <span
-                  class="cursor-pointer hover:text-[#1890FF] text-[14px]"
-                  @click="
-                    (detailedInformation = true),
-                      InformationFunction({ id: item.id })
-                  "
-                  >{{ item.username }}</span
-                >
+                <div>
+                  <span
+                    class="cursor-pointer hover:text-[#1890FF] text-[14px]"
+                    @click="
+                      (detailedInformation = true),
+                        InformationFunction({ id: item.id })
+                    "
+                    >{{ item.username }}</span
+                  >
+                </div>
                 <div>
                   <span class="text-[14px] text-[#999] mr-[15px]">{{
                     item.email
@@ -274,36 +280,49 @@
       <a-modal
         v-model:open="modal1Visible"
         style="top: 20px; width: 400px; padding: 0"
-        @ok="department(false)"
-        class="mt-[200px] masking-out"
+        @EditingDepartmentData="department(true)"
+        class="mt-[200px] masking-out EditingDepartmentCss"
       >
         <div
           class="border-b-[1px] border-b-[#DCDFE6] leading-[60px] pl-[20px] text-[16px]"
         >
           <span>编辑部门</span>
         </div>
-        <div class="pt-[30px] pb-[40px] px-[20px]">
-          <div class="flex items-center mb-[20px]">
-            <p class="text-right w-[100px] pr-[12px]">部门名称</p>
-            <a-input
-              v-model:value="info"
-              class="pl-[12px] h-[40px] text-[#606266 ] w-[226px] border-[1px] border-[#E8E8E8] rounded-[3px]"
-            ></a-input>
-          </div>
-          <div class="flex items-center mb-[20px]">
-            <p class="text-right w-[100px] pr-[12px]">排序</p>
-            <a-input
-              v-model:value="sort"
-              class="pl-[12px] h-[40px] w-[226px] border-[1px] border-[#E8E8E8] rounded-[3px]"
-            >
-            </a-input>
-          </div>
-          <button
-            class="w-[70px] h-[40px] rounded-[5px] ml-[100px] bg-[#409EFF] text-[#fff]"
-            @click="EditingAndModifying(info, sort, parameter.value.id)"
+        <div class="pt-[30px] pb-[40px] px-[20px] DepartmentSearchBox">
+          <a-form
+            :model="formState"
+            name="basic"
+            :label-col="{ span: 7 }"
+            :wrapper-col="{ span: 15 }"
           >
-            编辑
-          </button>
+            <a-form-item
+              label="部门名称"
+              name="DepartmentNameValue"
+              :rules="[{ required: true, message: '部门为必填项' }]"
+            >
+              <a-input
+                v-model:value="formState.DepartmentNameValue"
+                class="h-[40px]"
+              />
+            </a-form-item>
+            <a-form-item label="排序" name="sort">
+              <a-input v-model:value="formState.sortValue" class="h-[40px]" />
+            </a-form-item>
+
+            <a-form-item :wrapper-col="{ offset: 7, span: 16 }">
+              <a-button
+                html-type="button"
+                class="bg-[#409EFF] text-[#fff] h-[40px] w-"
+                @click="
+                  EditingDepartmentDataFn(
+                    Number(formState.sortValue),
+                    formState.DepartmentNameValue,
+                  )
+                "
+                >编辑</a-button
+              >
+            </a-form-item>
+          </a-form>
         </div>
       </a-modal>
     </div>
@@ -400,7 +419,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import {
   departmentInformation,
   departmentName,
@@ -410,9 +429,10 @@ import {
 } from "@/service/index";
 import { message } from "ant-design-vue";
 import { QuestionCircleOutlined } from "@ant-design/icons-vue";
-const info = ref("所有成员");
-const sort = ref(0);
 
+let titleData = ref(); //侧栏部门名字
+let userData = ref(); //侧栏部门数据
+let SearchUseInf = ref(); //成员列表数据
 // 成员列表
 let parameter = ref();
 // eslint-disable-next-line no-undef
@@ -425,10 +445,75 @@ const userDataFunction = (obj: {
 }) => {
   departmentInformation(obj).then((res) => {
     UserData.value = res;
+    obj.keyword = SearchUseInf.value;
     parameter.value = obj;
   });
 };
 userDataFunction({ keyword: "" });
+
+// 搜索
+const searchUser = () => {
+  parameter.value.keyword = SearchUseInf.value;
+  userDataFunction(parameter.value);
+};
+
+// 部门名称
+const { data: dataInformation, run: runDepartmentName } = useRequest(() =>
+  departmentName(),
+);
+
+// 标题 部门名称 序号
+const selectedValue = ref<string>("所有成员");
+// eslint-disable-next-line no-undef
+const selectedRow = ref<TuserData | null>(null);
+const selectedIndex = ref<number | undefined>(undefined);
+const showDepartmentValue = (
+  value: string,
+  // eslint-disable-next-line no-undef
+  row?: TuserData,
+  index?: number,
+) => {
+  selectedValue.value = value; //侧栏部门名字
+  selectedRow.value = row; //侧栏部门数据
+  selectedIndex.value = index; //侧栏部门索引
+  titleData.value = selectedValue.value;
+  userData.value = selectedRow.value;
+};
+
+// 编辑部门input框数据
+interface FormState {
+  DepartmentNameValue: string;
+  sortValue: number;
+}
+const formState = reactive<FormState>({
+  DepartmentNameValue: "",
+  sortValue: 0,
+});
+watchEffect(() => {
+  formState.DepartmentNameValue = selectedRow.value?.name || ""; // 如果name为undefined，则设为空字符串
+  formState.sortValue = Number(selectedRow.value?.sort) || 0;
+});
+
+// //编辑
+function EditingDepartmentDataFn(sort: number, name: string) {
+  EditingDepartment({
+    name: name,
+    sort: sort,
+    id: userData.value.id,
+    owner_id: userData.value.owner_id,
+    parent_id: userData.value.parent_id,
+    created_at: userData.value.created_at,
+    updated_at: userData.value.updated_at,
+  }).then((res) => {
+    message.info("编辑成功");
+    department(false);
+    console.log(res);
+    runDepartmentName();
+    userDataFunction(parameter.value);
+    selectedValue.value = name;
+    formState.sortValue = sort;
+  });
+}
 
 // 启动禁用框
 const confirm = async (id: number, state: 0 | 1) => {
@@ -441,14 +526,20 @@ const confirm = async (id: number, state: 0 | 1) => {
   userDataFunction(parameter.value);
 };
 
-// 编辑部门
-const EditingAndModifying = async (name: string, sort: number, id: number) => {
-  await EditingDepartment({ sort: sort, name: name, id: id });
-  console.log(await EditingDepartment({ sort: sort, name: name, id: id }));
+// // 部门排序
+// eslint-disable-next-line no-undef
+const DepartmentSorting = ref<TuserData>([]);
+const SortFunction = () => {
+  DepartmentSorting.value = dataInformation?.value?.data.rows
+    ? dataInformation.value.data.rows
+        .slice()
+        .sort((a: { sort: number }, b: { sort: number }) => b.sort - a.sort)
+    : [];
 };
-
-// 部门名称
-const { data: dataInformation } = useRequest(() => departmentName());
+// 在组件生命周期中，执行一次排序，并确保 sortedDepartments 响应式地跟踪 dataDepartmentName 的变化
+watchEffect(() => {
+  SortFunction();
+});
 
 // 成员详细信息
 // eslint-disable-next-line no-undef
@@ -490,7 +581,6 @@ const department = (open: boolean) => {
 .Height {
   height: calc(100vh - 65px);
 }
-
 #components-layout-demo-responsive .logo {
   height: 32px;
   margin: 16px;
@@ -498,19 +588,24 @@ const department = (open: boolean) => {
 :where(.css-dev-only-do-not-override-eq3tly).ant-layout .ant-layout-sider {
   background-color: #ffffff;
 }
-
 .ant-menu-title-content {
   display: flex;
   align-items: center;
 }
-.ant-modal-content {
-  padding: 0 !important;
+.EditingDepartmentCss {
+  .ant-modal-content {
+    padding: 0 !important;
+  }
 }
-
 .sidebar {
   width: 248px !important;
   max-width: 248px !important;
   min-width: 248px !important;
+  .nav-text {
+    overflow: hidden;
+    width: 160px !important;
+    text-overflow: ellipsis;
+  }
 }
 .masking-out {
   padding: 0;
@@ -523,13 +618,20 @@ const department = (open: boolean) => {
     display: none;
   }
 }
-
 .prohibit .ant-popconfirm-buttons {
   display: none;
 }
 .ant-popconfirm-buttons {
   .ant-btn-primary {
     background-color: #1677ff !important;
+  }
+}
+.DepartmentSearchBox {
+  .ant-form-item-required {
+    height: 40px !important;
+  }
+  .dynamic_rule_sort {
+    height: 40px !important;
   }
 }
 </style>
