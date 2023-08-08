@@ -9,6 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^4.0.0",
     "autoprefixer": "^10",
     "axios": "^1.4.0",
